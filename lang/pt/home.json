@@ -1,0 +1,21 @@
+{
+  "hero": "José Rodrigues · Programador Java.",
+  "intro": "OII, Chamo-me Zé, gosto de Java e n vim para aqui a pé.",
+  "wallets": [
+    {
+      "icon": "banano",
+      "label": "Carteira de Banano",
+      "description": "ban_1ikf4kd8iexaab1xwrqb5bnec88dka91tgqdp9gzupjbomubrmf9uinwhta3"
+    },
+    {
+      "icon": "nano",
+      "label": "Carteira de Nano",
+      "description": "nano_3a1q3zpkf6aag5bf767hnky6kwj9cfbefzzsy515zdp4cdzbb8k9bfaxp539"
+    },
+    {
+      "icon": "ethereum",
+      "label": "Carteira de cu",
+      "description": "0xC4399808c98eD30c5E5BCAd207100e9E5C70d2CC"
+    }
+  ]
+}
