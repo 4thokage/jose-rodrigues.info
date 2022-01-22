@@ -23,7 +23,7 @@
     "@solid-primitives/intersection-observer": "^1.2.0",
     "@solid-primitives/throttle": "^1.0.8",
     "@solid.js/docs": "^1.0.7",
-    "fuse.js": "^6.4.6",
+    "fuse.js": "^6.5.3",
     "monaco-editor": "^0.31.1",
     "scroll-behavior-polyfill": "^2.0.13",
     "solid-app-router": "^0.1.14",
