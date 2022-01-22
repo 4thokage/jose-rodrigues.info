@@ -5324,6 +5324,13 @@ solid-heroicons@^1.1.0:
   dependencies:
     solid-js "^1.2.5"
 
+solid-heroicons@^1.1.1:
+  version "1.1.1"
+  resolved "https://registry.yarnpkg.com/solid-heroicons/-/solid-heroicons-1.1.1.tgz#b9afdd7e687868c0521a3eba137a3e0c470dc725"
+  integrity sha512-7hP4QI5LTKOa4ueHhjXVlj+kZvYosDsiku90XqDGfukwefdzj87oJgUtU5OJpxUghqqhEjScqJAjdVvdZfYivw==
+  dependencies:
+    solid-js "^1.2.6"
+
 solid-js@1.2.5, solid-js@^1.2.5:
   version "1.2.5"
   resolved "https://registry.yarnpkg.com/solid-js/-/solid-js-1.2.5.tgz#26175228ae562c95e92f476c73db744b6b36fc2c"
