@@ -5603,10 +5603,10 @@ solid-markdown@^1.1.0:
     unist-util-visit "^4.1.0"
     vfile "^5.2.0"
 
-solid-meta@^0.27.2:
-  version "0.27.2"
-  resolved "https://registry.yarnpkg.com/solid-meta/-/solid-meta-0.27.2.tgz#873205fb7658bc67207b5feda5e360942fb63bad"
-  integrity sha512-t4rotsA99LMhiSI6C0pfN1fR8+bApl2ouOqIpOgxHtapJ+fgBIv7cVnI3nLMMzjiiML+vb83l9xes6/OLSCNtw==
+solid-meta@^0.27.3:
+  version "0.27.3"
+  resolved "https://registry.yarnpkg.com/solid-meta/-/solid-meta-0.27.3.tgz#60de5be67e1cc3354fbe3335c2731e79ccdedda2"
+  integrity sha512-XaVv0EPkoPvufzUOIMn4yOzZFnJvQPVBlpZFLc9zTFTUnb+cq/zuoWr0Sa0fEntodfVPe5j6NfvXwGE6pHQo+w==
 
 solid-refresh@^0.3.2:
   version "0.3.3"
