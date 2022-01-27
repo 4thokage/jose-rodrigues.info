@@ -19,7 +19,7 @@
     "@solid-primitives/clipboard": "^1.2.7",
     "@solid-primitives/cookies-store": "^1.1.11",
     "@solid-primitives/countdown": "^1.0.9",
-    "@solid-primitives/i18n": "^1.0.8",
+    "@solid-primitives/i18n": "^1.0.9",
     "@solid-primitives/intersection-observer": "^1.2.0",
     "@solid-primitives/throttle": "^1.0.8",
     "@solid.js/docs": "^1.0.7",
