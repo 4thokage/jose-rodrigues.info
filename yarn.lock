@@ -1215,10 +1215,10 @@
   dependencies:
     "@solid-primitives/timer" "^1.0.2"
 
-"@solid-primitives/i18n@^1.0.8":
-  version "1.0.8"
-  resolved "https://registry.yarnpkg.com/@solid-primitives/i18n/-/i18n-1.0.8.tgz#aa030a91177b5d1af16c3d2656e9788b79db3f08"
-  integrity sha512-MK5eiPJo7LnPB0bAXk7mFTqy5PNO55wqs8qj0d0gIc+v2ks3d+yt/oYJPM3lJrJF9Vgm5KURlfXlJGAQ3SK+cA==
+"@solid-primitives/i18n@^1.0.9":
+  version "1.0.9"
+  resolved "https://registry.yarnpkg.com/@solid-primitives/i18n/-/i18n-1.0.9.tgz#5738449849595e13e89f6dba1cc65f5cd62438d2"
+  integrity sha512-ypfLfSSzCjjGtUGyqOtpm/RIkaeDSDBLXIFaFNhAm0tLkAVlTt71nd0ScFfa/tJ+q0SsGphdm7yIDU1c4zWpdg==
 
 "@solid-primitives/intersection-observer@^1.2.0":
   version "1.2.0"
