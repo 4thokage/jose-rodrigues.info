@@ -1,7 +1,7 @@
 const theme = require('tailwindcss/defaultTheme');
 
 module.exports = {
-  purge: ['index.html', 'src/**/*.tsx'],
+  content: ['index.html', 'src/**/*.tsx'],
   mode: 'jit',
   darkMode: 'media',
   theme: {
@@ -77,9 +77,6 @@ module.exports = {
       },
       backgroundImage: (theme) => ({
         hero: "url('/src/assets/shapes/header.svg')",
-        'blocks-one': "url('/src/assets/shapes/blocks1.svg')",
-        'blocks-two': "url('/src/assets/shapes/blocks2.svg')",
-        'blocks-three': "url('/src/assets/shapes/blocks3.svg')",
       }),
       container: {
         center: true,

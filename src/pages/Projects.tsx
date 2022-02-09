@@ -1,51 +1,26 @@
-import { Component, For } from 'solid-js';
-import viewCode from '../assets/icons/view-code.svg';
-import viewDemo from '../assets/icons/view-demo.svg';
+import { Component, createResource, For } from 'solid-js';
 import { useI18n } from '@solid-primitives/i18n';
 import { useRouteReadyState } from '../utils/routeReadyState';
 
-const projects = [
-  {
-    title: 'This.',
-    background: 'bg-white',
-    example: '/img/logo/jose-rodrigues.info.png',
-    assets: {
-      Source: 'https://github.com/4thokage/jose-rodrigues.info',
-      Showcase: 'https://jose-rodrigues.info',
-    },
-  },
-  {
-    title: 'Zen1t Music Library',
-    background: 'bg-white',
-    example: '/img/logo/zen1t.ml.png',
-    assets: {
-      Source: 'https://github.com/4thokage/zen1t.ml',
-      Showcase: 'https://zen1t.ml',
-    },
-  },
-  {
-    title: 'Conistack',
-    background: 'bg-white',
-    example: '/img/logo/conistack.png',
-    assets: {
-      Source: 'https://github.com/4thokage/conistack',
-      Showcase: 'https://conistack.zen1t.tk',
-    },
-  },
-];
+const fetchProjects = async () =>
+  (
+    await fetch(
+      'https://gist.githubusercontent.com/4thokage/c98926ab1d0d7c363bbb293f4c714cdd/raw/5951e1b481bda446483abe265e4904667beee10d/projects.json',
+    )
+  ).json();
 
 const ProjectPanel: Component<{
   title: string;
   example: string;
   assets: Record<string, string>;
-  background: string;
-}> = ({ title, assets, example, background }) => {
+}> = ({ title, assets, example }) => {
   const [t] = useI18n();
   const slug = title.replaceAll(' ', '_').toLowerCase();
+
   return (
     <div class="shadow-md">
       <div class="p-5 border-b">{t(`media.resources.${slug}`, {}, title)}</div>
-      <div class={`py-8 h-56 flex px-10 items-center justify-center ${background}`}>
+      <div class={`py-8 h-56 flex px-10 items-center justify-center`}>
         <img src={example} alt={title} />
       </div>
       <div class="border-b border-t grid grid-cols-2 text-sm text-solid">
@@ -55,13 +30,7 @@ const ProjectPanel: Component<{
             download={path.split('/').pop()}
             href={path}
           >
-            <span class="sr-only">View {name}</span>
-            <img
-              class="w-3 mr-4"
-              alt="Magnifying glass"
-              src={name === 'Source' ? viewCode : viewDemo}
-            />{' '}
-            {name}
+            <span class="sr-only">View {name}</span> {name}
           </a>
         ))}
       </div>
@@ -71,6 +40,8 @@ const ProjectPanel: Component<{
 
 const Projects: Component = () => {
   const [t] = useI18n();
+
+  const [projects] = createResource(fetchProjects);
 
   useRouteReadyState();
 
@@ -83,7 +54,11 @@ const Projects: Component = () => {
           </div>
           <div class="col-span-4 col-end-7 mt-9 md:mt-0">
             <div class="lg:grid lg:grid-cols-2 gap-4 space-y-5 md:space-y-0">
-              <For each={projects}>{(props) => <ProjectPanel {...props} />}</For>
+              <For each={projects()}>
+                {(props: { title: string; example: string; assets: Record<string, string> }) => (
+                  <ProjectPanel {...props} />
+                )}
+              </For>
             </div>
           </div>
         </div>

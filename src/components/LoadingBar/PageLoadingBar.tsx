@@ -16,7 +16,7 @@ const PageLoadingBar: Component<{
     >
       <div
         class="w-full h-full rounded-full"
-        style={`background: #000955; transform: translateX(-100%); animation: ${animationValue()}; transform-origin: left; `}
+        style={`background: #DA9144; transform: translateX(-100%); animation: ${animationValue()}; transform-origin: left; `}
       ></div>
     </div>
   );

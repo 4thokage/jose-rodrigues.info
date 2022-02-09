@@ -81,27 +81,6 @@ const Header: Component<{ title?: string }> = () => {
                         <Match when={location.pathname.includes('/blog')}>
                           <Title>{t('global.blog.title', {}, 'Blog')}</Title>
                         </Match>
-                        <Match when={location.pathname.includes('/guide')}>
-                          <Title>{t('guides.title', {}, 'Guides')}</Title>
-                        </Match>
-                        <Match when={location.pathname.includes('/docs')}>
-                          <Title>{t('docs.title', {}, 'Guides')}</Title>
-                        </Match>
-                        <Match when={location.pathname.includes('/resources')}>
-                          <Title>{t('resources.title', {}, 'Guides')}</Title>
-                        </Match>
-                        <Match when={location.pathname.includes('/examples')}>
-                          <Title>{t('examples.title', {}, 'Guides')}</Title>
-                        </Match>
-                        <Match when={location.pathname.includes('/media')}>
-                          <Title>{t('media.title', {}, 'Guides')}</Title>
-                        </Match>
-                        <Match when={location.pathname.includes('/blog')}>
-                          <Title>{t('blog.title', {}, 'Blog')}</Title>
-                        </Match>
-                        <Match when={location.pathname.includes('/contributors')}>
-                          <Title>{t('contributors.title', {}, 'Team & Contributions')}</Title>
-                        </Match>
                       </Switch>
                     </Transition>
                   </h1>

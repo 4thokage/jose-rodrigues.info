@@ -1,6 +1,8 @@
 {
     "hero": "José Rodrigues · Java Developer.",
-    "intro": "Heyo! My name is José Rodrigues and I am a Java Developer based in Lisbon, Portugal.",
+    "intro": "Hey! My name is José Rodrigues and I am a Java Developer based in Lisbon, Portugal.",
+    "intro2": "During my free time I like to experiment with the most recent web technologies.",
+    "intro3": "Bellow is a visualization of 'Metro de Portugal' real time transportation, enjoy!",
     "wallets": [
       {
         "icon": "banano",

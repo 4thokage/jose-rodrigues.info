@@ -199,7 +199,7 @@ const Nav: Component<{ showLogo?: boolean; filled?: boolean }> = (props) => {
             >
               <Link href="/" onClick={onClickLogo} noScroll class={`py-3 flex w-9 `}>
                 <span class="sr-only">Navigate to the home page</span>
-                <img class="w-full h-auto" src={logo} alt="Solid logo" />
+                <img class="w-full h-auto" src={logo} alt="Cofee bean logo" />
               </Link>
             </div>
             <ScrollShadow
