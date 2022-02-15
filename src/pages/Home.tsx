@@ -1,30 +1,25 @@
 import { Component } from 'solid-js';
 import { useI18n } from '@solid-primitives/i18n';
 import { useRouteReadyState } from '../utils/routeReadyState';
+import * as d3 from 'd3';
 
 const Home: Component<{}> = () => {
   const [t] = useI18n();
 
-  let worldData;
+  const svg = d3.select('svg');
+  console.log(svg);
 
   useRouteReadyState();
 
   return (
-    <div class="dark:bg-solid-gray flex flex-col md:pt-8">
-      <div class="lg:my-2 px-0 lg:px-12 container flex flex-col lg:space-y-10 md:pt-10 bg-blocks-one bg-contain bg-no-repeat bg-left-top">
-        <p>{t('home.intro')}</p>
-        <p> {t('home.intro2')}</p>
-        <p> {t('home.intro3')}</p>
-        <svg
-          ref={worldData}
-          class="bg-solid-gray h-500"
-          style={{
-            height: 500, //width: "100%"
-            width: 900,
-            marginRight: '0px',
-            marginLeft: '0px',
-          }}
-        ></svg>
+    <div class="flex flex-col">
+      <div class="my-10 pt-5 pb-10 px-3 lg:px-12 container">
+        <div class="mb-10 md:grid md:grid-cols-6 gap-10">
+          <div class="col-span-2">
+            <div class="mb-8">{t('home.intro')}</div>
+            {t('home.metro-example')}
+          </div>
+        </div>
       </div>
     </div>
   );

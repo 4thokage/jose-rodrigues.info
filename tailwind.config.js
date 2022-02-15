@@ -75,9 +75,6 @@ module.exports = {
           },
         },
       },
-      backgroundImage: (theme) => ({
-        hero: "url('/src/assets/shapes/header.svg')",
-      }),
       container: {
         center: true,
       },

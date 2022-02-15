@@ -34,8 +34,8 @@ const ScrollShadow: Component<
 
   // Won't work for SSR
   const scrollableContainer = props.children as HTMLElement;
-  scrollableContainer.appendChild(sentinelFirstEl);
-  scrollableContainer.appendChild(sentinelLastEl);
+  // scrollableContainer.appendChild(sentinelFirstEl);
+  // scrollableContainer.appendChild(sentinelLastEl);
 
   const scrollHorizontally = (e: WheelEvent) => {
     if (!isScrollable) return;
@@ -83,8 +83,8 @@ const ScrollShadow: Component<
     scrollableContainer.addEventListener('wheel', scrollHorizontally);
     sentinelShadowState.set(sentinelFirstEl, { el: shadowFirstEl, visible: false });
     sentinelShadowState.set(sentinelLastEl, { el: shadowLastEl, visible: false });
-    observer.observe(sentinelFirstEl);
-    observer.observe(sentinelLastEl);
+    // observer.observe(sentinelFirstEl);
+    // observer.observe(sentinelLastEl);
     setInitShadowSize();
     onCleanup(() => observer && observer.disconnect());
   });

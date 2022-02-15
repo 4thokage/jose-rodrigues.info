@@ -54,7 +54,7 @@ const About: Component<{}> = () => {
                         <For each={job.description}>
                           {(j) => (
                             <div>
-                              <li class="text-white text-left">{j}</li>
+                              <li class="text-center dark:text-white">{j}</li>
                               <br />
                             </div>
                           )}
@@ -102,7 +102,7 @@ const About: Component<{}> = () => {
                   alt={strength.label}
                 />
                 <h3 class="text-xl mb-2 font-semibold">{strength.label}</h3>
-                <p class="text-base break-words">{strength.description}</p>
+                <p class="text-base break-all">{strength.description}</p>
               </div>
             )}
           </For>

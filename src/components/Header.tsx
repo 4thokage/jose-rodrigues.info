@@ -54,9 +54,9 @@ const Header: Component<{ title?: string }> = () => {
                     alt="Coffee bean logo"
                   />
                 </div>
-                <h2 class="lg:font-semibold text-[26px] sm:text-3xl leading-8 lg:text-4xl lg:leading-10 xl:max-w-3xl">
+                <h1 class="lg:font-semibold text-[26px] sm:text-3xl leading-8 lg:text-4xl lg:leading-10 xl:max-w-3xl">
                   {t('home.hero')}
-                </h2>
+                </h1>
               </section>
             </div>
           </header>
