@@ -5334,10 +5334,10 @@ slash@^4.0.0:
   resolved "https://registry.npmjs.org/slash/-/slash-4.0.0.tgz"
   integrity sha512-3dOsAHXXUkQTpOYcoAxLIorMTp4gIQr5IW3iVb7A7lFIp0VHhnynm9izx6TssdrIcVIESAlVjtnO2K8bg+Coew==
 
-solid-app-router@^0.2.1:
-  version "0.2.1"
-  resolved "https://registry.npmjs.org/solid-app-router/-/solid-app-router-0.2.1.tgz"
-  integrity sha512-ENkhw3EF6MbkOuhRuCvmALtXs2x/fjvQw1ZSQP3ON7l6q6+QqTT8d0oZf6r5VYS95IIlevSSJNnAwvc1+Fx6Hw==
+solid-app-router@^0.3.0:
+  version "0.3.1"
+  resolved "https://registry.yarnpkg.com/solid-app-router/-/solid-app-router-0.3.1.tgz#20ee62d9b0e37ed80360d5d992320cb7056d545e"
+  integrity sha512-GpDu8tpEWG8azP02PEJ0tUb3g0euWJ9rJoHNUs8qMf3/jW4P3zVBF+E5vOFRcGNkqXiSLvniawCwV5V344fHtQ==
 
 solid-dismiss@^1.0.27:
   version "1.0.27"
