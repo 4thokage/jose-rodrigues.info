@@ -22,7 +22,7 @@
     "@solid-primitives/i18n": "^1.0.9",
     "@solid-primitives/intersection-observer": "^1.2.2",
     "@solid-primitives/throttle": "^1.1.0",
-    "@solid.js/docs": "^1.0.26",
+    "@solid.js/docs": "^1.0.42",
     "d3": "^7.3.0",
     "fuse.js": "^6.5.3",
     "monaco-editor": "^0.32.1",
