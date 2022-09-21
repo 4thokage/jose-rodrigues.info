@@ -1,27 +1,29 @@
-# jose-rodrigues.info
+# Astro Starter Kit: Portfolio
+
+```
+npm create astro@latest -- --template portfolio
+```
+
+[![Open in StackBlitz](https://developer.stackblitz.com/img/open_in_stackblitz.svg)](https://stackblitz.com/github/withastro/astro/tree/latest/examples/portfolio)
+
+> 🧑‍🚀 **Seasoned astronaut?** Delete this file. Have fun!
+
+![portfolio](https://user-images.githubusercontent.com/4677417/186189473-03dda103-65d3-4220-8b60-180ccaee5939.png)
 
 
-## Getting started
+## 🧞 Commands
 
-The website is built with [Solid](https://github.com/solidjs/solid).
+All commands are run from the root of the project, from a terminal:
 
-### Prerequisites
+| Command                | Action                                           |
+| :--------------------- | :----------------------------------------------- |
+| `npm install`          | Installs dependencies                            |
+| `npm run dev`          | Starts local dev server at `localhost:3000`      |
+| `npm run build`        | Build your production site to `./dist/`          |
+| `npm run preview`      | Preview your build locally, before deploying     |
+| `npm run astro ...`    | Run CLI commands like `astro add`, `astro check` |
+| `npm run astro --help` | Get help using the Astro CLI                     |
 
-- [yarn](https://yarnpkg.com/getting-started/install)
+## 👀 Want to learn more?
 
-### Install
-
-1. Clone the project locally: `git clone https://github.com/solidjs/solid-site`
-2. Change directory into your local copy: `cd solid-site`
-3. Install the dependencies: `yarn install`
-
-### Available commands
-
-- `yarn install`: Install the dependencies
-- `yarn dev`: Start the dev server
-- `yarn build`: Build the project
-- `yarn format`: Format the whole project with prettier
-
-### PWA Testing
-
-Solid Site supports PWA and worker auto updating powered by Vite PWA Plugin. When testing `run yarn https-preview`. Running it the first time will ask to install the certificate if not yet done. Then open your Chrome and press F12 > Network Tab > browse to https://localhost. Wait until the network requests with gears at the begining stops downloading the SW precache, then on the same Network Tab just change `No throttling` option to `Offline`. All pages should work by pressing F5 (do not do a hard refresh Crtl + F5 as it will force the browser to go to the server and the Chrome Dinosaur will appear).
+Feel free to check [our documentation](https://docs.astro.build) or jump into our [Discord server](https://astro.build/chat).

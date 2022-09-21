@@ -1,0 +1,55 @@
+---
+import MainHead from '../components/MainHead.astro';
+import Nav from '../components/Nav.astro';
+---
+
+<html lang="en">
+	<head>
+		<MainHead title="About | José Rodrigues" description="José's short bio" />
+		<style>
+			.heroImg {
+				max-height: 24rem;
+				object-fit: cover;
+				overflow: hidden;
+			}
+
+			.heroImg img {
+				width: 100%;
+			}
+
+			.bio {
+				font-size: var(--f-u1);
+				line-height: 2;
+				margin-top: 4em;
+			}
+
+			.wrapper.bio {
+				max-width: 50em;
+			}
+		</style>
+	</head>
+	<body>
+		<Nav />
+		<div class="wrapper">
+			<h1>About me</h1>
+			<div class="heroImg">
+				<img
+					width="1400"
+					height="350"
+					src="https://images.unsplash.com/photo-1555786766-e1e69380c4bc?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1400&h=350&q=80"
+				/>
+			</div>
+			<div class="bio wrapper">
+				<p>
+					I started working in IT in 2015, I do feel a little bit old but I am still eager to learn new stuff haha
+				</p>
+				<p>
+					I do mostly consulting for other companies, recently is mostly remote work
+				</p>
+				<p>
+					I consider myself a man of a few words. Safe travels
+				</p>
+			</div>
+		</div>
+	</body>
+</html>
