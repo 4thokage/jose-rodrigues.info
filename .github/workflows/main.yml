@@ -25,4 +25,5 @@ jobs:
 
     - name: Check build
       run: |
+        npm install -g astro
         npm run build
