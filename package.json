@@ -12,8 +12,5 @@
   },
   "dependencies": {
     "astro": "^1.6.0"
-  },
-   "devDependencies": {
-    "astro": "^1.6.0"
   }
 }
