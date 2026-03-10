@@ -5,8 +5,20 @@ import { Suspense } from 'react'
 import { SolarSystem } from './SolarSystem'
 import { Starfield } from './Starfield'
 import { CameraRig } from './CameraRig'
+import { SpaceshipCamera } from './SpaceshipCamera'
 import { Effects } from './Effects'
 import { COLORS } from '../../utils/constants'
+import { useStore } from '../../store/useStore'
+
+function CameraController() {
+  const controlMode = useStore((s) => s.controlMode)
+
+  if (controlMode === 'ship') {
+    return <SpaceshipCamera />
+  }
+
+  return <CameraRig />
+}
 
 export function Scene() {
   return (
@@ -20,7 +32,7 @@ export function Scene() {
         <ambientLight intensity={0.1} />
         <Starfield />
         <SolarSystem />
-        <CameraRig />
+        <CameraController />
         <Effects />
       </Suspense>
     </Canvas>

@@ -18,9 +18,16 @@ const panelComponents = {
 export function UIOverlay() {
   const selectedPlanet = useStore((s) => s.selectedPlanet)
   const selectPlanet = useStore((s) => s.selectPlanet)
+  const controlMode = useStore((s) => s.controlMode)
+  const isPointerLocked = useStore((s) => s.isPointerLocked)
 
   const handleClose = () => {
     selectPlanet(null)
+    if (controlMode === 'ship' && !isPointerLocked) {
+      setTimeout(() => {
+        document.querySelector('canvas')?.requestPointerLock()
+      }, 100)
+    }
   }
 
   const handleKeyDown = (e: React.KeyboardEvent) => {

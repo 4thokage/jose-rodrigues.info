@@ -87,8 +87,8 @@ export function Planet({ data, initialAngle }: PlanetProps) {
           distanceFactor={12}
         >
           <div 
-            className="px-2 py-1 rounded text-xs text-white whitespace-nowrap"
-            style={{ backgroundColor: `${data.color}80` }}
+            className="px-3 py-1.5 rounded text-sm text-white whitespace-nowrap"
+            style={{ backgroundColor: `${data.color}90` }}
           >
             {data.name}
           </div>
