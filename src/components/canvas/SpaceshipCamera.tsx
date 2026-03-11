@@ -224,8 +224,8 @@ export function SpaceshipCamera() {
       const tiltYaw = THREE.MathUtils.clamp(gamma / 45, -1, 1)
       
       euler.current.setFromQuaternion(camera.quaternion)
-      euler.current.x += tiltPitch * delta * 0.5
-      euler.current.y += tiltYaw * delta * 0.5
+      euler.current.x -= tiltPitch * delta * 0.5
+      euler.current.y -= tiltYaw * delta * 0.5
       euler.current.x = Math.max(-Math.PI / 2, Math.min(Math.PI / 2, euler.current.x))
       camera.quaternion.setFromEuler(euler.current)
     }
