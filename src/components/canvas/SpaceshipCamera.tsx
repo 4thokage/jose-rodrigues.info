@@ -1,19 +1,23 @@
 'use client'
 
-import { useRef, useEffect, useCallback, useState } from 'react'
+import { useRef, useEffect, useCallback } from 'react'
 import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useStore } from '../../store/useStore'
 import { planets } from '../../data/planets'
+import { ANIMATION } from '../../utils/constants'
 
 const MOVE_SPEED = 8
 const MOUSE_SENSITIVITY = 0.002
 const CAN_LAND_DISTANCE = 20
+const INITIAL_ANGLES = [0, Math.PI / 3, (2 * Math.PI) / 3, Math.PI]
 
-function getPlanetPosition(planetId: string) {
-  const planet = planets.find(p => p.id === planetId)
-  if (!planet) return null
-  const angle = Date.now() * 0.001 * planet.orbitSpeed * 0.3
+function getPlanetPosition(planetId: string, now: number) {
+  const planetIndex = planets.findIndex((p) => p.id === planetId)
+  if (planetIndex === -1) return null
+  const planet = planets[planetIndex]
+  const initialAngle = INITIAL_ANGLES[planetIndex] ?? 0
+  const angle = initialAngle + now * 0.001 * planet.orbitSpeed * ANIMATION.orbitSpeedMultiplier
   return new THREE.Vector3(
     Math.cos(angle) * planet.orbitRadius,
     0,
@@ -21,41 +25,36 @@ function getPlanetPosition(planetId: string) {
   )
 }
 
-function checkSpaceContext(camera: THREE.Camera, raycaster: THREE.Raycaster) {
+function checkSpaceContext(camera: THREE.Camera, raycaster: THREE.Raycaster, now: number) {
   let nearestPlanetId: string | null = null
-  let nearestDistance = Infinity
+  let distanceToSurface = Infinity
 
-  planets.forEach(planet => {
-    const pos = getPlanetPosition(planet.id)
+  planets.forEach((planet) => {
+    const pos = getPlanetPosition(planet.id, now)
     if (!pos) return
     const distToCenter = camera.position.distanceTo(pos)
     const distToSurface = distToCenter - planet.size
-    if (distToSurface < nearestDistance) {
-      nearestDistance = distToSurface
+    if (distToSurface < distanceToSurface) {
+      distanceToSurface = distToSurface
       nearestPlanetId = planet.id
     }
   })
 
   raycaster.setFromCamera(new THREE.Vector2(0, 0), camera)
+  const ray = raycaster.ray
 
   let facedPlanetId: string | null = null
   let facedDistance = Infinity
+  const hitPoint = new THREE.Vector3()
 
   for (const planet of planets) {
-    const pos = getPlanetPosition(planet.id)
+    const pos = getPlanetPosition(planet.id, now)
     if (!pos) continue
 
-    const direction = pos.clone().sub(camera.position).normalize()
-    const ray = new THREE.Ray(camera.position, direction)
-
-    const a = 1
-    const b = 2 * camera.position.clone().sub(pos).dot(direction)
-    const c = pos.clone().sub(camera.position).lengthSq() - planet.size * planet.size
-    const discriminant = b * b - 4 * a * c
-
-    if (discriminant >= 0) {
-      const t = (-b - Math.sqrt(discriminant)) / (2 * a)
-      if (t > 0 && t < facedDistance) {
+    const sphere = new THREE.Sphere(pos, planet.size)
+    if (ray.intersectSphere(sphere, hitPoint)) {
+      const t = camera.position.distanceTo(hitPoint)
+      if (t < facedDistance) {
         facedDistance = t
         facedPlanetId = planet.id
       }
@@ -65,13 +64,12 @@ function checkSpaceContext(camera: THREE.Camera, raycaster: THREE.Raycaster) {
   const canLand = facedPlanetId !== null && 
                   nearestPlanetId !== null && 
                   facedPlanetId === nearestPlanetId && 
-                  nearestDistance < CAN_LAND_DISTANCE
+                  distanceToSurface < CAN_LAND_DISTANCE
 
   return {
     nearestPlanetId,
-    nearestDistance,
+    distanceToSurface,
     facedPlanetId,
-    facedDistance,
     canLand
   }
 }
@@ -85,8 +83,6 @@ export function SpaceshipCamera() {
   const setPointerLocked = useStore((s) => s.setPointerLocked)
   const acceleration = useStore((s) => s.acceleration)
   const setIsMobile = useStore((s) => s.setIsMobile)
-  
-  const [, forceUpdate] = useState(0)
 
   const euler = useRef(new THREE.Euler(0, 0, 0, 'YXZ'))
   const keys = useRef<Set<string>>(new Set())
@@ -141,9 +137,9 @@ export function SpaceshipCamera() {
           }, 100)
         }
       } else if (canLand) {
-        const nearestPlanetId = useStore.getState().nearestPlanetId
-        if (nearestPlanetId) {
-          selectPlanet(nearestPlanetId)
+        const facedPlanetId = useStore.getState().facedPlanetId
+        if (facedPlanetId) {
+          selectPlanet(facedPlanetId)
         }
       }
     }
@@ -247,16 +243,15 @@ export function SpaceshipCamera() {
     if (Date.now() - lastUpdateRef.current > 50) {
       lastUpdateRef.current = Date.now()
       
-      const spaceContext = checkSpaceContext(camera, raycaster.current)
+      const spaceContext = checkSpaceContext(camera, raycaster.current, Date.now())
       
       useStore.setState({
         nearestPlanetId: spaceContext.nearestPlanetId,
-        nearestPlanetDistance: spaceContext.nearestDistance,
-        distanceToSurface: spaceContext.nearestDistance,
+        nearestPlanetDistance: spaceContext.distanceToSurface,
+        distanceToSurface: spaceContext.distanceToSurface,
         facedPlanetId: spaceContext.facedPlanetId,
         canLand: spaceContext.canLand,
       })
-      forceUpdate(n => n + 1)
     }
   })
 

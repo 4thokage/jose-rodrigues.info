@@ -7,14 +7,12 @@ export function LandingPrompt() {
   const controlMode = useStore((s) => s.controlMode)
   const isPanelOpen = useStore((s) => s.isPanelOpen)
   const nearestPlanetId = useStore((s) => s.nearestPlanetId)
-  const nearestPlanetDistance = useStore((s) => s.nearestPlanetDistance)
+  const canLand = useStore((s) => s.canLand)
   const isPointerLocked = useStore((s) => s.isPointerLocked)
 
   if (controlMode !== 'ship' || isPanelOpen) return null
 
   const nearestPlanet = planets.find(p => p.id === nearestPlanetId)
-  const canLand = nearestPlanet && nearestPlanetDistance < 4
-
   return (
     <div className="fixed bottom-20 left-1/2 -translate-x-1/2 z-40 text-center pointer-events-none">
       {!isPointerLocked && (
