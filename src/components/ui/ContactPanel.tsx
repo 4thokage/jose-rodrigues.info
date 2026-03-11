@@ -18,12 +18,6 @@ export function ContactPanel() {
           </li>
         ))}
       </ul>
-      <button
-        className="mt-6 px-6 py-3 rounded-lg text-white font-medium transition-colors hover:opacity-90"
-        style={{ backgroundColor: data.color }}
-      >
-        Send Message
-      </button>
     </div>
   )
 }

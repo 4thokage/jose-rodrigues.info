@@ -7,12 +7,16 @@ import { AboutPanel } from './AboutPanel'
 import { ProjectsPanel } from './ProjectsPanel'
 import { TechStackPanel } from './TechStackPanel'
 import { ContactPanel } from './ContactPanel'
+import { CreativePanel } from './CreativePanel'
+import { useIsMobile } from '../../hooks/useIsMobile'
+import { zoomIn, zoomOut } from '../canvas/CameraRig'
 
 const panelComponents = {
   about: AboutPanel,
   projects: ProjectsPanel,
   techStack: TechStackPanel,
   contact: ContactPanel,
+  creative: CreativePanel,
 }
 
 export function UIOverlay() {
@@ -20,6 +24,8 @@ export function UIOverlay() {
   const selectPlanet = useStore((s) => s.selectPlanet)
   const controlMode = useStore((s) => s.controlMode)
   const isPointerLocked = useStore((s) => s.isPointerLocked)
+
+  const isMobile = useIsMobile()
 
   const handleClose = () => {
     selectPlanet(null)
@@ -60,6 +66,24 @@ export function UIOverlay() {
       >
         Click planets to explore
       </div>
+      {isMobile && controlMode === 'orbit' && (
+        <div className="fixed bottom-4 right-4 z-10 flex items-center gap-2">
+          <button
+            onClick={zoomOut}
+            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white text-lg"
+            aria-label="Zoom out"
+          >
+            -
+          </button>
+          <button
+            onClick={zoomIn}
+            className="w-10 h-10 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors text-white text-lg"
+            aria-label="Zoom in"
+          >
+            +
+          </button>
+        </div>
+      )}
       <AnimatePresence>
         {selectedPlanet && PanelContent && (
           <motion.div

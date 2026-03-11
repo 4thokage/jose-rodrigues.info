@@ -22,20 +22,62 @@ function getPlanetPosition(planetId: string) {
 }
 
 export function SpaceshipCamera() {
-  const { camera, gl } = useThree()
+  const { camera, gl, scene } = useThree()
   const controlMode = useStore((s) => s.controlMode)
   const isPanelOpen = useStore((s) => s.isPanelOpen)
   const isPointerLocked = useStore((s) => s.isPointerLocked)
   const selectPlanet = useStore((s) => s.selectPlanet)
   const setPointerLocked = useStore((s) => s.setPointerLocked)
   const setNearestPlanet = useStore((s) => s.setNearestPlanet)
+  const acceleration = useStore((s) => s.acceleration)
+  const setIsMobile = useStore((s) => s.setIsMobile)
 
   const euler = useRef(new THREE.Euler(0, 0, 0, 'YXZ'))
   const keys = useRef<Set<string>>(new Set())
-  const nearestPlanet = useRef<string | null>(null)
+  const raycaster = useRef(new THREE.Raycaster())
+  const deviceOrientation = useRef({ alpha: 0, beta: 0, gamma: 0 })
+  const hasAccelerometer = useRef(false)
+
+  const detectMobile = useCallback(() => {
+    const isTouch = 'ontouchstart' in window || navigator.maxTouchPoints > 0
+    const isSmall = window.innerWidth <= 768
+    setIsMobile(isTouch || isSmall)
+  }, [setIsMobile])
+
+  const requestAccelerometerPermission = useCallback(async () => {
+    if (typeof DeviceOrientationEvent !== 'undefined' && 
+        typeof (DeviceOrientationEvent as unknown as { requestPermission?: () => Promise<string> }).requestPermission === 'function') {
+      try {
+        const permission = await (DeviceOrientationEvent as unknown as { requestPermission: () => Promise<string> }).requestPermission()
+        if (permission === 'granted') {
+          hasAccelerometer.current = true
+        }
+      } catch (e) {
+        console.log('Accelerometer permission denied')
+      }
+    } else if ('DeviceOrientationEvent' in window) {
+      hasAccelerometer.current = true
+    }
+  }, [])
+
+  const handleDeviceOrientation = useCallback((e: DeviceOrientationEvent) => {
+    if (e.alpha !== null) {
+      deviceOrientation.current = {
+        alpha: e.alpha || 0,
+        beta: e.beta || 0,
+        gamma: e.gamma || 0
+      }
+    }
+  }, [])
 
   const handleKeyDown = useCallback((e: KeyboardEvent) => {
     keys.current.add(e.code)
+
+    if (e.code === 'Escape') {
+      if (isPanelOpen) {
+        selectPlanet(null)
+      }
+    }
 
     if (e.code === 'KeyE') {
       if (isPanelOpen) {
@@ -43,18 +85,9 @@ export function SpaceshipCamera() {
         setTimeout(() => {
           gl.domElement.requestPointerLock()
         }, 100)
-      } else if (nearestPlanet.current) {
-        const planetPos = getPlanetPosition(nearestPlanet.current)
-        if (planetPos) {
-          const distance = camera.position.distanceTo(planetPos)
-          if (distance < LANDING_DISTANCE) {
-            selectPlanet(nearestPlanet.current)
-            document.exitPointerLock()
-          }
-        }
       }
     }
-  }, [isPanelOpen, selectPlanet, camera, gl])
+  }, [isPanelOpen, selectPlanet, gl])
 
   const handleKeyUp = useCallback((e: KeyboardEvent) => {
     keys.current.delete(e.code)
@@ -81,6 +114,18 @@ export function SpaceshipCamera() {
     }
   }, [controlMode, isPanelOpen, isPointerLocked, gl])
 
+  const handleTouchStart = useCallback(() => {
+    if (controlMode === 'ship' && !isPanelOpen && !hasAccelerometer.current) {
+      requestAccelerometerPermission()
+    }
+  }, [controlMode, isPanelOpen, requestAccelerometerPermission])
+
+  useEffect(() => {
+    detectMobile()
+    window.addEventListener('resize', detectMobile)
+    return () => window.removeEventListener('resize', detectMobile)
+  }, [detectMobile])
+
   useEffect(() => {
     if (controlMode !== 'ship') return
 
@@ -89,6 +134,8 @@ export function SpaceshipCamera() {
     document.addEventListener('mousemove', handleMouseMove)
     document.addEventListener('pointerlockchange', handlePointerLockChange)
     gl.domElement.addEventListener('click', handleClick)
+    gl.domElement.addEventListener('touchstart', handleTouchStart)
+    window.addEventListener('deviceorientation', handleDeviceOrientation)
 
     return () => {
       window.removeEventListener('keydown', handleKeyDown)
@@ -96,8 +143,10 @@ export function SpaceshipCamera() {
       document.removeEventListener('mousemove', handleMouseMove)
       document.removeEventListener('pointerlockchange', handlePointerLockChange)
       gl.domElement.removeEventListener('click', handleClick)
+      gl.domElement.removeEventListener('touchstart', handleTouchStart)
+      window.removeEventListener('deviceorientation', handleDeviceOrientation)
     }
-  }, [controlMode, handleKeyDown, handleKeyUp, handleMouseMove, handlePointerLockChange, handleClick, gl])
+  }, [controlMode, handleKeyDown, handleKeyUp, handleMouseMove, handlePointerLockChange, handleClick, handleTouchStart, handleDeviceOrientation, gl])
 
   useFrame((_, delta) => {
     if (controlMode !== 'ship') return
@@ -113,8 +162,19 @@ export function SpaceshipCamera() {
     if (keys.current.has('Space')) direction.y += 1
     if (keys.current.has('ShiftLeft')) direction.y -= 1
 
+    if (hasAccelerometer.current) {
+      const { beta, gamma } = deviceOrientation.current
+      const tiltForward = THREE.MathUtils.clamp((beta - 45) / 45, -1, 1)
+      const tiltRight = THREE.MathUtils.clamp(gamma / 45, -1, 1)
+      
+      direction.add(forward.clone().multiplyScalar(tiltForward * 0.5))
+      direction.add(right.clone().multiplyScalar(tiltRight * 0.5))
+    }
+
+    const accelMultiplier = acceleration / 100
+
     if (direction.length() > 0) {
-      direction.normalize().multiplyScalar(MOVE_SPEED * delta)
+      direction.normalize().multiplyScalar(MOVE_SPEED * delta * (1 + accelMultiplier))
       camera.position.add(direction)
     }
 
@@ -134,12 +194,66 @@ export function SpaceshipCamera() {
       }
     })
 
-    nearestPlanet.current = closestPlanetId
-
     setNearestPlanet(closestPlanetId, closestDistance)
 
-    if (closestPlanetId && closestDistance < LANDING_DISTANCE && !isPanelOpen) {
-      selectPlanet(closestPlanetId)
+    raycaster.current.setFromCamera(new THREE.Vector2(0, 0), camera)
+    
+    const planetMeshes: THREE.Object3D[] = []
+    scene.traverse((obj) => {
+      if (obj instanceof THREE.Mesh && obj.geometry instanceof THREE.SphereGeometry) {
+        const pos = obj.position
+        const distFromOrigin = Math.sqrt(pos.x * pos.x + pos.z * pos.z)
+        if (distFromOrigin > 2 && distFromOrigin < 20) {
+          planetMeshes.push(obj)
+        }
+      }
+    })
+    
+    const intersects = raycaster.current.intersectObjects(planetMeshes, true)
+    
+    let facedPlanetId: string | null = null
+    if (intersects.length > 0) {
+      const hitPoint = intersects[0].point
+      const hitDistFromOrigin = Math.sqrt(hitPoint.x * hitPoint.x + hitPoint.z * hitPoint.z)
+      
+      let closestMatch = Infinity
+      let matchedPlanetId: string | null = null
+      
+      planets.forEach((planet) => {
+        const angle = Date.now() * 0.001 * planet.orbitSpeed * 0.3
+        const px = Math.cos(angle) * planet.orbitRadius
+        const pz = Math.sin(angle) * planet.orbitRadius
+        const planetPos = new THREE.Vector3(px, 0, pz)
+        const distToHit = planetPos.distanceTo(hitPoint)
+        
+        if (distToHit < closestMatch) {
+          closestMatch = distToHit
+          matchedPlanetId = planet.id
+        }
+      })
+      
+      if (closestMatch < 3) {
+        facedPlanetId = matchedPlanetId
+      }
+    }
+
+    const currentSelectedPlanet = useStore.getState().selectedPlanet
+
+    if (facedPlanetId && closestDistance < LANDING_DISTANCE && !isPanelOpen) {
+      selectPlanet(facedPlanetId)
+    }
+
+    if (isPanelOpen && currentSelectedPlanet) {
+      const currentPlanetPos = getPlanetPosition(currentSelectedPlanet)
+      if (currentPlanetPos) {
+        const distFromSelected = camera.position.distanceTo(currentPlanetPos)
+        
+        if (distFromSelected > LANDING_DISTANCE * 1.5) {
+          selectPlanet(null)
+        } else if (facedPlanetId && facedPlanetId !== currentSelectedPlanet && closestDistance < LANDING_DISTANCE) {
+          selectPlanet(facedPlanetId)
+        }
+      }
     }
   })
 

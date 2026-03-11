@@ -17,6 +17,7 @@ export function Planet({ data, initialAngle }: PlanetProps) {
   const groupRef = useRef<THREE.Group>(null)
   const meshRef = useRef<THREE.Mesh>(null)
   const [hovered, setHovered] = useState(false)
+  const scaleRef = useRef(1)
   
   const selectedPlanet = useStore((s) => s.selectedPlanet)
   const selectPlanet = useStore((s) => s.selectPlanet)
@@ -34,6 +35,12 @@ export function Planet({ data, initialAngle }: PlanetProps) {
     
     if (meshRef.current) {
       meshRef.current.rotation.y += 0.01
+    }
+
+    const targetScale = isSelected ? 1.2 : hovered ? 1.3 : 1
+    scaleRef.current = THREE.MathUtils.lerp(scaleRef.current, targetScale, 0.1)
+    if (meshRef.current) {
+      meshRef.current.scale.setScalar(scaleRef.current)
     }
   })
 
@@ -60,7 +67,6 @@ export function Planet({ data, initialAngle }: PlanetProps) {
         onClick={handleClick}
         onPointerOver={handlePointerOver}
         onPointerOut={handlePointerOut}
-        scale={isSelected ? 1.2 : hovered ? 1.1 : 1}
       >
         <sphereGeometry args={[data.size, 32, 32]} />
         <meshStandardMaterial
@@ -80,20 +86,22 @@ export function Planet({ data, initialAngle }: PlanetProps) {
           />
         </mesh>
       )}
-      {hovered && !isSelected && (
-        <Html
-          position={[0, data.size + 0.5, 0]}
-          center
-          distanceFactor={12}
+      <Html
+        position={[0, data.size + 0.5, 0]}
+        center
+        distanceFactor={12}
+        style={{
+          opacity: hovered || isSelected ? 1 : 0.7,
+          transition: 'opacity 0.3s ease',
+        }}
+      >
+        <div 
+          className="px-3 py-1.5 rounded text-sm text-white whitespace-nowrap"
+          style={{ backgroundColor: `${data.color}90` }}
         >
-          <div 
-            className="px-3 py-1.5 rounded text-sm text-white whitespace-nowrap"
-            style={{ backgroundColor: `${data.color}90` }}
-          >
-            {data.name}
-          </div>
-        </Html>
-      )}
+          {data.name}
+        </div>
+      </Html>
     </group>
   )
 }

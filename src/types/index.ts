@@ -25,10 +25,16 @@ export interface StoreState {
   isPointerLocked: boolean
   nearestPlanetId: string | null
   nearestPlanetDistance: number
+  isMobile: boolean
+  zoomLevel: number
+  acceleration: number
   selectPlanet: (id: string | null) => void
   setHoveredPlanet: (id: string | null) => void
   setCameraTarget: (target: Vector3) => void
   setControlMode: (mode: ControlMode) => void
   setPointerLocked: (locked: boolean) => void
   setNearestPlanet: (id: string | null, distance: number) => void
+  setIsMobile: (mobile: boolean) => void
+  setZoomLevel: (level: number) => void
+  setAcceleration: (accel: number) => void
 }

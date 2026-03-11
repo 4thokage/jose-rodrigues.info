@@ -11,6 +11,9 @@ export const useStore = create<StoreState>((set) => ({
   isPointerLocked: false,
   nearestPlanetId: null,
   nearestPlanetDistance: Infinity,
+  isMobile: false,
+  zoomLevel: 1,
+  acceleration: 0,
 
   selectPlanet: (id: string | null) =>
     set({
@@ -28,4 +31,10 @@ export const useStore = create<StoreState>((set) => ({
 
   setNearestPlanet: (id: string | null, distance: number) => 
     set({ nearestPlanetId: id, nearestPlanetDistance: distance }),
+
+  setIsMobile: (mobile: boolean) => set({ isMobile: mobile }),
+
+  setZoomLevel: (level: number) => set({ zoomLevel: level }),
+
+  setAcceleration: (accel: number) => set({ acceleration: accel }),
 }))

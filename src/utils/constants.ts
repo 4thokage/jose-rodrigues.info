@@ -8,10 +8,10 @@ export const COLORS = {
 } as const
 
 export const PLANET_COLORS = {
-  about: '#4A90D9',
-  projects: '#D94A4A',
-  techStack: '#D9A84A',
-  contact: '#D9C74A',
+  about: '#F8F6D8',
+  projects: '#0E68AB',
+  techStack: '#00733E',
+  contact: '#D3202A',
 } as const
 
 export const CAMERA = {

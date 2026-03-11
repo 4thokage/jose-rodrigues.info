@@ -8,23 +8,30 @@ import { useStore } from '../../store/useStore'
 import { CAMERA, ANIMATION } from '../../utils/constants'
 import { planets } from '../../data/planets'
 
+export const zoomIn = () => {
+  const zoomLevel = useStore.getState().zoomLevel
+  useStore.getState().setZoomLevel(Math.min(2, zoomLevel + 0.2))
+}
 
+export const zoomOut = () => {
+  const zoomLevel = useStore.getState().zoomLevel
+  useStore.getState().setZoomLevel(Math.max(0.3, zoomLevel - 0.2))
+}
 
 export function CameraRig() {
   const { camera } = useThree()
   const selectedPlanet = useStore((s) => s.selectedPlanet)
+  const zoomLevel = useStore((s) => s.zoomLevel)
 
   const targetPosition = useRef(new THREE.Vector3(...CAMERA.defaultPosition))
   const targetLookAt = useRef(new THREE.Vector3(0, 0, 0))
-  const zoomLevel = useRef(1)
-  const baseDistance = useRef(18)
 
   useEffect(() => {
     const handleWheel = (e: WheelEvent) => {
       e.preventDefault()
       const delta = e.deltaY * 0.01
-      zoomLevel.current = Math.max(0.3, Math.min(2, zoomLevel.current + delta))
-      baseDistance.current = 18 * zoomLevel.current
+      const currentZoom = useStore.getState().zoomLevel
+      useStore.getState().setZoomLevel(Math.max(0.3, Math.min(2, currentZoom + delta)))
     }
 
     const canvas = document.querySelector('canvas')
@@ -56,7 +63,7 @@ export function CameraRig() {
         targetLookAt.current.set(0, 0, 0)
       }
     } else {
-      basePos = new THREE.Vector3(0, 8, baseDistance.current)
+      basePos = new THREE.Vector3(0, 8, 18 * zoomLevel)
       targetLookAt.current.set(0, 0, 0)
     }
 
