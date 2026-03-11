@@ -25,6 +25,9 @@ export interface StoreState {
   isPointerLocked: boolean
   nearestPlanetId: string | null
   nearestPlanetDistance: number
+  distanceToSurface: number
+  facedPlanetId: string | null
+  canLand: boolean
   isMobile: boolean
   zoomLevel: number
   acceleration: number
