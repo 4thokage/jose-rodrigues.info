@@ -20,7 +20,6 @@ export interface StoreState {
   selectedPlanet: string | null
   hoveredPlanet: string | null
   isPanelOpen: boolean
-  cameraTarget: Vector3
   controlMode: ControlMode
   isPointerLocked: boolean
   nearestPlanetId: string | null
@@ -33,7 +32,6 @@ export interface StoreState {
   acceleration: number
   selectPlanet: (id: string | null) => void
   setHoveredPlanet: (id: string | null) => void
-  setCameraTarget: (target: Vector3) => void
   setControlMode: (mode: ControlMode) => void
   setPointerLocked: (locked: boolean) => void
   setNearestPlanet: (id: string | null, distance: number) => void

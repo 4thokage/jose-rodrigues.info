@@ -14,6 +14,8 @@ export const PLANET_COLORS = {
   contact: '#D3202A',
 } as const
 
+export const PLANET_INITIAL_ANGLES = [0, Math.PI / 3, (2 * Math.PI) / 3, Math.PI] as const
+
 export const CAMERA = {
   defaultPosition: [0, 8, 18] as [number, number, number],
   zoomedPosition: [0, 2, 6] as [number, number, number],

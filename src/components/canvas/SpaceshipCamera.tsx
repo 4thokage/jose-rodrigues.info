@@ -5,18 +5,17 @@ import { useFrame, useThree } from '@react-three/fiber'
 import * as THREE from 'three'
 import { useStore } from '../../store/useStore'
 import { planets } from '../../data/planets'
-import { ANIMATION } from '../../utils/constants'
+import { ANIMATION, PLANET_INITIAL_ANGLES } from '../../utils/constants'
 
 const MOVE_SPEED = 8
 const MOUSE_SENSITIVITY = 0.002
 const CAN_LAND_DISTANCE = 20
-const INITIAL_ANGLES = [0, Math.PI / 3, (2 * Math.PI) / 3, Math.PI]
 
 function getPlanetPosition(planetId: string, now: number) {
   const planetIndex = planets.findIndex((p) => p.id === planetId)
   if (planetIndex === -1) return null
   const planet = planets[planetIndex]
-  const initialAngle = INITIAL_ANGLES[planetIndex] ?? 0
+  const initialAngle = PLANET_INITIAL_ANGLES[planetIndex] ?? 0
   const angle = initialAngle + now * 0.001 * planet.orbitSpeed * ANIMATION.orbitSpeedMultiplier
   return new THREE.Vector3(
     Math.cos(angle) * planet.orbitRadius,
