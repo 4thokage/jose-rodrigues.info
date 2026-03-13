@@ -7,6 +7,7 @@ import { AboutPanel } from './AboutPanel'
 import { ProjectsPanel } from './ProjectsPanel'
 import { TechStackPanel } from './TechStackPanel'
 import { ContactPanel } from './ContactPanel'
+import { StarPanel } from './StarPanel'
 import { useIsMobile } from '../../hooks/useIsMobile'
 import { zoomIn, zoomOut } from '../canvas/CameraRig'
 
@@ -15,6 +16,7 @@ const panelComponents = {
   projects: ProjectsPanel,
   techStack: TechStackPanel,
   contact: ContactPanel,
+  star: StarPanel,
 }
 
 export function UIOverlay() {

@@ -54,6 +54,18 @@ export const planets: PlanetData[] = [
       items: ['Email: jsr@jose-rodrigues.info', 'GitHub: @4thokage'],
     },
   },
+  {
+    id: 'star',
+    name: 'Zezadas',
+    color: PLANET_COLORS.star,
+    orbitRadius: 69,
+    orbitSpeed: 0.015,
+    size: 0.5,
+    content: {
+      title: 'Zezadas',
+      body: 'Creative universe - Videos, Music, and Writings',
+    },
+  },
 ]
 
 export const sunData = {

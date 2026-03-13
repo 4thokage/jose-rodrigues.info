@@ -12,9 +12,11 @@ export const PLANET_COLORS = {
   projects: '#0E68AB',
   techStack: '#00733E',
   contact: '#D3202A',
+  star: '#9B30FF',
+  starGlow: '#E040FB',
 } as const
 
-export const PLANET_INITIAL_ANGLES = [0, Math.PI / 3, (2 * Math.PI) / 3, Math.PI] as const
+export const PLANET_INITIAL_ANGLES = [0, Math.PI / 3, (2 * Math.PI) / 3, Math.PI, Math.PI * 1.5] as const
 
 export const CAMERA = {
   defaultPosition: [0, 8, 18] as [number, number, number],
