@@ -51,18 +51,10 @@ export function StarPanel() {
                 </div>
                 <div>
                   <h4 className="text-white font-medium">Romaria</h4>
-                  <p className="text-white/40 text-sm">Original</p>
+                  <p className="text-white/40 text-sm">Renato Teixeira</p>
                 </div>
               </div>
-              <div className="space-y-2">
-                <div className="h-1 bg-white/10 rounded-full overflow-hidden">
-                  <div className="h-full w-1/3 bg-gradient-to-r from-purple-500 to-pink-500 rounded-full" />
-                </div>
-                <div className="flex justify-between text-xs text-white/40">
-                  <span>1:23</span>
-                  <span>4:12</span>
-                </div>
-              </div>
+              <audio src="/romaria.mpeg" controls className="w-full mt-4" />
               <div className="flex items-center justify-center gap-4 mt-4">
                 <button className="text-white/60 hover:text-white transition-colors">
                   <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24">
