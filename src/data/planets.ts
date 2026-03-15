@@ -63,7 +63,7 @@ export const planets: PlanetData[] = [
     size: 0.5,
     content: {
       title: 'Zezadas',
-      body: 'Creative universe - Videos, Music, and Writings',
+      body: 'Creative universe - Music and Writings',
     },
   },
 ]
